@@ -1,0 +1,5 @@
+package retail
+
+class Placeholder {
+
+}
