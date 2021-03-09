@@ -63,33 +63,22 @@ class RomanNumeralsNumber(number: Int) extends Ordered[RomanNumeralsNumber] {
 
   override def hashCode(): Int = this.n
 
-  // STUB TO FAIL THE FIRST TEST
   def +(addend: RomanNumeralsNumber): RomanNumeralsNumber =
-    new RomanNumeralsNumber(1)
+    new RomanNumeralsNumber(this.n + addend.n)
 
-  // STUB TO FAIL THE FIRST TEST
   def -(subtrahend: RomanNumeralsNumber) : RomanNumeralsNumber =
-    new RomanNumeralsNumber(3999)
+    new RomanNumeralsNumber(this.n - subtrahend.n)
 
-  // STUB TO FAIL THE FIRST TEST
   def *(multiplicand: RomanNumeralsNumber): RomanNumeralsNumber =
-    new RomanNumeralsNumber(1)
+    new RomanNumeralsNumber(this.n * multiplicand.n)
 
   // STUB TO FAIL THE FIRST TEST
   def %(modulo: RomanNumeralsNumber): RomanNumeralsNumber =
     new RomanNumeralsNumber(1)
 
-  // STUB TO FAIL THE FIRST TEST
   def /(divisor: RomanNumeralsNumber): RomanNumeralsNumber =
-    new RomanNumeralsNumber(3999)
+    new RomanNumeralsNumber(this.n / divisor.n)
 
-  // STUB TO FAIL THE FIRST TEST
-
-  // STUB TO FAIL THE FIRST TEST
-
-  // STUB TO FAIL THE FIRST TEST
-
-  // STUB TO FAIL THE FIRST TEST
-  override def compare(that: RomanNumeralsNumber): Int = 0
+  override def compare(that: RomanNumeralsNumber): Int = this.n - that.n
 
 }

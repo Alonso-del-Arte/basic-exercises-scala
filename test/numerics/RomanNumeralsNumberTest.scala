@@ -253,12 +253,65 @@ class RomanNumeralsNumberTest {
   }
 
   @Test def testPlus(): Unit = {
+    println("+")
     val a = RomanNumeralsNumberTest.RANDOM.nextInt(2000) + 1
     val b = RomanNumeralsNumberTest.RANDOM.nextInt(1999) + 1
     val addendA = new RomanNumeralsNumber(a)
     val addendB = new RomanNumeralsNumber(b)
     val expected = new RomanNumeralsNumber(a + b)
     val actual = addendA + addendB
+    assertEquals(expected, actual)
+  }
+
+  @Test def testMinus(): Unit = {
+    println("-")
+    val a = RomanNumeralsNumberTest.RANDOM.nextInt(3999) + 2
+    val b = RomanNumeralsNumberTest.RANDOM.nextInt(a - 1) + 1
+    val minuend = new RomanNumeralsNumber(a)
+    val subtrahend = new RomanNumeralsNumber(b)
+    val expected = new RomanNumeralsNumber(a - b)
+    val actual = minuend - subtrahend
+    assertEquals(expected, actual)
+  }
+
+  @Test def testTimes(): Unit = {
+    println("*")
+    val a = RomanNumeralsNumberTest.RANDOM.nextInt(63) + 1
+    val b = RomanNumeralsNumberTest.RANDOM.nextInt(63) + 1
+    val multiplicandA = new RomanNumeralsNumber(a)
+    val multiplicandB = new RomanNumeralsNumber(b)
+    val expected = new RomanNumeralsNumber(a * b)
+    val actual = multiplicandA * multiplicandB
+    assertEquals(expected, actual)
+  }
+
+  // TODO: Write remainder (operator%) test
+
+  @Test def testDivides(): Unit = {
+    println("/")
+    val a = RomanNumeralsNumberTest.RANDOM.nextInt(62) + 1
+    val b = a * a + a
+    val dividend = new RomanNumeralsNumber(b)
+    val divisor = new RomanNumeralsNumber(a + 1)
+    val expected = new RomanNumeralsNumber(a)
+    val actual = dividend / divisor
+    assertEquals(expected, actual)
+  }
+
+  // TODO: Write test for a / b with gcd(a, b) = 1
+
+  @Test def testCompare(): Unit = {
+    println("compare")
+    val a = RomanNumeralsNumberTest.RANDOM.nextInt(800) + 1
+    val b = a + RomanNumeralsNumberTest.RANDOM.nextInt(800) + 1
+    val c = b + RomanNumeralsNumberTest.RANDOM.nextInt(800) + 1
+    val d = c + RomanNumeralsNumberTest.RANDOM.nextInt(800) + 1
+    val e = d + RomanNumeralsNumberTest.RANDOM.nextInt(799) + 1
+    val sorted = List(a, b, c, d, e)
+    val unsorted = List(c, d, a, e, b)
+    val toBeSorted = unsorted.map(new RomanNumeralsNumber(_))
+    val expected = sorted.map(new RomanNumeralsNumber(_))
+    val actual = toBeSorted.sorted
     assertEquals(expected, actual)
   }
 
