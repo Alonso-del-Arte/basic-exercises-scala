@@ -30,8 +30,8 @@ class Fraction(numer: Long, denom: Long = 1L) extends Ordered[Fraction] {
     case _ => false
   }
 
-  // STUB TO FAIL THE FIRST TEST
-  override def hashCode(): Int = 0
+  override def hashCode(): Int =
+    (this.denominator.toInt << 16) + (this.numerator.toInt % 65536)
 
   def +(addend: Fraction): Fraction = {
     val crossNumerA = this.numerator * addend.denominator
