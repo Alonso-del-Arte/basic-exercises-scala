@@ -6,16 +6,19 @@ class CurrencyAmount(val amountInCents: Long, val currency: Currency)
   extends Ordered[CurrencyAmount] {
   private val centPlaces = this.currency.getDefaultFractionDigits
 
-  override def toString: String = this.currency.getSymbol + {
-    var str = Math.abs(this.amountInCents).toString
-    if (str.length < this.centPlaces + 1) {
-      val zeroPad = "0" * (this.centPlaces - str.length + 1)
-      str = zeroPad + str
-    }
-    if (this.amountInCents < 0) str = s"-$str"
-    val (units, cents) = str.splitAt(str.length - this.centPlaces)
-    units + '.' + cents
-  }
+  override def toString: String = this.currency.getSymbol +
+    (if (this.centPlaces == 0)
+      this.amountInCents.toString
+    else {
+      var str = Math.abs(this.amountInCents).toString
+      if (str.length < this.centPlaces + 1) {
+        val zeroPad = "0" * (this.centPlaces - str.length + 1)
+        str = zeroPad + str
+      }
+      if (this.amountInCents < 0) str = s"-$str"
+      val (units, cents) = str.splitAt(str.length - this.centPlaces)
+      units + '.' + cents
+    })
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[CurrencyAmount]
 
