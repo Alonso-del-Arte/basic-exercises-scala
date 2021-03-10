@@ -1,12 +1,12 @@
 package fractions
 
-import java.util.Random
+import scala.collection.immutable.HashSet
+import scala.util.Random
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions._
 
 class FractionTest {
-  private val random: Random = new Random
 
   @Test def testToString(): Unit = {
     println("toString")
@@ -24,27 +24,27 @@ class FractionTest {
   }
 
   @Test def testReferentialEquality(): Unit = {
-    val numer = random.nextInt
+    val numer = Random.nextInt
     val denom = 43 * numer + 1
     val fraction = new Fraction(numer, denom)
     assertEquals(fraction, fraction)
   }
 
   @Test def testNotEqualsNull(): Unit = {
-    val numer = random.nextInt
+    val numer = Random.nextInt
     val denom = 58 * numer + 1
     val fraction = new Fraction(numer, denom)
     assertNotEquals(fraction, null)
   }
 
   @Test def testNotEqualsDiffClass(): Unit = {
-    val numer = random.nextInt
+    val numer = Random.nextInt
     val integer = new Fraction(numer)
     assertNotEquals(integer, numer)
   }
 
   @Test def testNotEqualsDiffNumer(): Unit = {
-    val numer = random.nextInt
+    val numer = Random.nextInt
     val denom = 29 * numer + 1
     val fractionA = new Fraction(numer, denom)
     val fractionB = new Fraction(numer + 1, denom)
@@ -52,7 +52,7 @@ class FractionTest {
   }
 
   @Test def testNotEqualsDiffDenom(): Unit = {
-    val numer = random.nextInt
+    val numer = Random.nextInt
     val denom = 29 * numer + 1
     val fractionA = new Fraction(numer, denom)
     val fractionB = new Fraction(numer, denom * 2)
@@ -66,7 +66,19 @@ class FractionTest {
     assertEquals(someFraction, sameFraction)
   }
 
-  // TODO: Write hash code test
+  @Test def testHashCode(): Unit = {
+    println("hashCode")
+    var fractions: HashSet[Fraction] = HashSet()
+    var hashes: HashSet[Int] = HashSet()
+    for (denom <- 2 to 100) {
+      for (numer <- 1 until denom) {
+        val fraction = new Fraction(numer, denom)
+        fractions += fraction
+        hashes += fraction.hashCode()
+      }
+    }
+    assertEquals(fractions.size, hashes.size)
+  }
 
   @Test def testCompare(): Unit = {
     println("compare")
@@ -98,8 +110,6 @@ class FractionTest {
     assertEquals(expected, actual)
   }
 
-  // TODO: Tests for /
-
   @Test def testNegate(): Unit = {
     println("negate")
     val oneHalf = new Fraction(1, 2)
@@ -118,7 +128,7 @@ class FractionTest {
   }
 
   @Test def testMinusNotCommutative(): Unit = {
-    val denom = random.nextInt(65536) + 1
+    val denom = Random.nextInt(65536) + 1
     val numer = 109 * denom + 1
     val fractionA = new Fraction(numer, denom)
     val fractionB = new Fraction(numer + 1, denom * 3)
@@ -137,8 +147,8 @@ class FractionTest {
   }
 
   @Test def testTimesCommutative(): Unit = {
-    val fractionA = new Fraction(random.nextInt, 56L)
-    val fractionB = new Fraction(44, random.nextInt | 1L)
+    val fractionA = new Fraction(Random.nextInt, 56L)
+    val fractionB = new Fraction(44, Random.nextInt | 1L)
     val expected = fractionA * fractionB
     val actual = fractionB * fractionA
     assertEquals(expected, actual)
@@ -186,7 +196,7 @@ class FractionTest {
   }
 
   @Test def testDivisionByZero(): Unit = {
-    val dividend = new Fraction(random.nextLong, 84)
+    val dividend = new Fraction(Random.nextLong, 84)
     val zero = new Fraction(0)
     try {
       val badDivision = dividend / zero
@@ -220,7 +230,7 @@ class FractionTest {
   }
 
   @Test def testNumericApproximationOfInteger(): Unit = {
-    val integer = random.nextInt
+    val integer = Random.nextInt
     val fraction = new Fraction(integer)
     val expected = integer.toDouble
     val actual = fraction.numericApproximation
@@ -236,7 +246,7 @@ class FractionTest {
   }
 
   @Test def testConstructorTurnsNegativeDenomPositive(): Unit = {
-    val numer = random.nextInt(131072) + 1
+    val numer = Random.nextInt(131072) + 1
     val denom = -127 * numer + 1
     val fraction = new Fraction(numer, denom)
     val msg = "Fraction " + fraction.toString +
@@ -248,7 +258,7 @@ class FractionTest {
 
   @Test def testConstructorRejectsDenomZero(): Unit = {
     try {
-      val badFraction = new Fraction(random.nextInt, 0)
+      val badFraction = new Fraction(Random.nextInt, 0)
       val msg = "Should not have been able to create " + badFraction.toString
       fail(msg)
     } catch {
@@ -265,20 +275,16 @@ class FractionTest {
   }
 
   @Test def testConstructorRejectsDenomLongMinValue(): Unit = {
-    try {
-      val badFraction = new Fraction(random.nextInt, Long.MinValue)
-      val msg = "Should not have been able to create " + badFraction.toString +
-        " with denominator " + Long.MinValue
-      fail(msg)
-    } catch {
-      case ae: ArithmeticException =>
-        println("ArithmeticException correctly occurred for denominator " +
-          Long.MinValue)
-        println("\"" + ae.getMessage + "\"")
-      case e: Exception => val msg = e.getClass.getName +
-        " is the wrong exception to throw for denominator " + Long.MinValue
-        fail(msg)
-    }
+    val exception = assertThrows(classOf[ArithmeticException], () => {
+      val badFraction = new Fraction(Random.nextInt, Long.MinValue)
+      println("Should not have been able to create " + badFraction.toString +
+        " with denominator " + Long.MinValue)
+    })
+    println("Trying to use " + Long.MinValue
+      + " as denominator correctly caused ArithmeticException")
+    val excMsg = exception.getMessage
+    assert(excMsg != null, "Exception message should not be null")
+    println("\"" + excMsg + "\"")
   }
 
 }

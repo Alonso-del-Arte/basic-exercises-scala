@@ -6,16 +6,10 @@ import scala.util.Random
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions._
 
-object RomanNumeralsNumberTest {
-
-  val RANDOM = new Random
-
-}
-
 class RomanNumeralsNumberTest {
 
   @Test def testConstructorRejectsNegativeNumber(): Unit = {
-    val negativeNumber = -RomanNumeralsNumberTest.RANDOM.nextInt(1024) - 1
+    val negativeNumber = -Random.nextInt(1024) - 1
     val exception = assertThrows(classOf[IllegalArgumentException], () => {
       val badNumeral = new RomanNumeralsNumber(negativeNumber)
       println("Should not have been able to create " + badNumeral.toString
@@ -41,7 +35,7 @@ class RomanNumeralsNumberTest {
   }
 
   @Test def testConstructorRejectsNumberOver3999(): Unit = {
-    val excessiveNumber = RomanNumeralsNumberTest.RANDOM.nextInt(4000) + 4000
+    val excessiveNumber = Random.nextInt(4000) + 4000
     val exception = assertThrows(classOf[IllegalArgumentException], () => {
       val badNumeral = new RomanNumeralsNumber(excessiveNumber)
       println("Should not have been able to create " + badNumeral.toString
@@ -246,7 +240,7 @@ class RomanNumeralsNumberTest {
 
   @Test def testApply(): Unit = {
     println("apply")
-    val n = RomanNumeralsNumberTest.RANDOM.nextInt(3999) + 1
+    val n = Random.nextInt(3999) + 1
     val expected = new RomanNumeralsNumber(n)
     val actual = RomanNumeralsNumber(n)
     assertEquals(expected, actual)
@@ -254,8 +248,8 @@ class RomanNumeralsNumberTest {
 
   @Test def testPlus(): Unit = {
     println("+")
-    val a = RomanNumeralsNumberTest.RANDOM.nextInt(2000) + 1
-    val b = RomanNumeralsNumberTest.RANDOM.nextInt(1999) + 1
+    val a = Random.nextInt(2000) + 1
+    val b = Random.nextInt(1999) + 1
     val addendA = new RomanNumeralsNumber(a)
     val addendB = new RomanNumeralsNumber(b)
     val expected = new RomanNumeralsNumber(a + b)
@@ -265,8 +259,8 @@ class RomanNumeralsNumberTest {
 
   @Test def testMinus(): Unit = {
     println("-")
-    val a = RomanNumeralsNumberTest.RANDOM.nextInt(3999) + 2
-    val b = RomanNumeralsNumberTest.RANDOM.nextInt(a - 1) + 1
+    val a = Random.nextInt(3999) + 2
+    val b = Random.nextInt(a - 1) + 1
     val minuend = new RomanNumeralsNumber(a)
     val subtrahend = new RomanNumeralsNumber(b)
     val expected = new RomanNumeralsNumber(a - b)
@@ -276,8 +270,8 @@ class RomanNumeralsNumberTest {
 
   @Test def testTimes(): Unit = {
     println("*")
-    val a = RomanNumeralsNumberTest.RANDOM.nextInt(63) + 1
-    val b = RomanNumeralsNumberTest.RANDOM.nextInt(63) + 1
+    val a = Random.nextInt(63) + 1
+    val b = Random.nextInt(63) + 1
     val multiplicandA = new RomanNumeralsNumber(a)
     val multiplicandB = new RomanNumeralsNumber(b)
     val expected = new RomanNumeralsNumber(a * b)
@@ -289,7 +283,7 @@ class RomanNumeralsNumberTest {
 
   @Test def testDivides(): Unit = {
     println("/")
-    val a = RomanNumeralsNumberTest.RANDOM.nextInt(62) + 1
+    val a = Random.nextInt(62) + 1
     val b = a * a + a
     val dividend = new RomanNumeralsNumber(b)
     val divisor = new RomanNumeralsNumber(a + 1)
@@ -302,11 +296,11 @@ class RomanNumeralsNumberTest {
 
   @Test def testCompare(): Unit = {
     println("compare")
-    val a = RomanNumeralsNumberTest.RANDOM.nextInt(800) + 1
-    val b = a + RomanNumeralsNumberTest.RANDOM.nextInt(800) + 1
-    val c = b + RomanNumeralsNumberTest.RANDOM.nextInt(800) + 1
-    val d = c + RomanNumeralsNumberTest.RANDOM.nextInt(800) + 1
-    val e = d + RomanNumeralsNumberTest.RANDOM.nextInt(799) + 1
+    val a = Random.nextInt(800) + 1
+    val b = a + Random.nextInt(800) + 1
+    val c = b + Random.nextInt(800) + 1
+    val d = c + Random.nextInt(800) + 1
+    val e = d + Random.nextInt(799) + 1
     val sorted = List(a, b, c, d, e)
     val unsorted = List(c, d, a, e, b)
     val toBeSorted = unsorted.map(new RomanNumeralsNumber(_))

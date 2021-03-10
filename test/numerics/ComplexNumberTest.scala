@@ -2,6 +2,8 @@ package numerics
 
 import postal.ZIPCode
 
+import scala.util.Random
+
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions._
 
@@ -214,6 +216,76 @@ class ComplexNumberTest {
     val expected = new ComplexNumber(0.0, Math.PI)
     val actual = Math.PI * imaginaryUnit
     assertEquals(expected, actual)
+  }
+
+  @Test def testConstructorRejectsRealNaN(): Unit = {
+    val exception = assertThrows(classOf[ArithmeticException], () => {
+      val badNumber = new ComplexNumber(Double.NaN, Random.nextDouble)
+      println("Should not have been able to create " + badNumber.toString)
+    })
+    println("NaN for real part correctly caused ArithmeticException")
+    val excMsg = exception.getMessage
+    assert(excMsg != null, "Exception message should not be null")
+    println("\"" + excMsg + "\"")
+  }
+
+  @Test def testConstructorRejectsImaginaryNaN(): Unit = {
+    val exception = assertThrows(classOf[ArithmeticException], () => {
+      val badNumber = new ComplexNumber(Random.nextDouble, Double.NaN)
+      println("Should not have been able to create " + badNumber.toString)
+    })
+    println("NaN for imaginary part correctly caused ArithmeticException")
+    val excMsg = exception.getMessage
+    assert(excMsg != null, "Exception message should not be null")
+    println("\"" + excMsg + "\"")
+  }
+
+  @Test def testConstructorRejectsRealInfinity(): Unit = {
+    val exception = assertThrows(classOf[ArithmeticException], () => {
+      val badNumber = new ComplexNumber(Double.PositiveInfinity,
+        Random.nextDouble)
+      println("Should not have been able to create " + badNumber.toString)
+    })
+    println("+Infinity for real part correctly caused ArithmeticException")
+    val excMsg = exception.getMessage
+    assert(excMsg != null, "Exception message should not be null")
+    println("\"" + excMsg + "\"")
+  }
+
+  @Test def testConstructorRejectsImaginaryInfinity(): Unit = {
+    val exception = assertThrows(classOf[ArithmeticException], () => {
+      val badNumber = new ComplexNumber(Random.nextDouble,
+        Double.PositiveInfinity)
+      println("Should not have been able to create " + badNumber.toString)
+    })
+    println("+Infinity for imaginary part correctly caused ArithmeticException")
+    val excMsg = exception.getMessage
+    assert(excMsg != null, "Exception message should not be null")
+    println("\"" + excMsg + "\"")
+  }
+
+  @Test def testConstructorRejectsRealNegativeInfinity(): Unit = {
+    val exception = assertThrows(classOf[ArithmeticException], () => {
+      val badNumber = new ComplexNumber(Double.NegativeInfinity,
+        Random.nextDouble)
+      println("Should not have been able to create " + badNumber.toString)
+    })
+    println("-Infinity for real part correctly caused ArithmeticException")
+    val excMsg = exception.getMessage
+    assert(excMsg != null, "Exception message should not be null")
+    println("\"" + excMsg + "\"")
+  }
+
+  @Test def testConstructorRejectsImaginaryNegativeInfinity(): Unit = {
+    val exception = assertThrows(classOf[ArithmeticException], () => {
+      val badNumber = new ComplexNumber(Random.nextDouble,
+        Double.NegativeInfinity)
+      println("Should not have been able to create " + badNumber.toString)
+    })
+    println("-Infinity for imaginary part correctly caused ArithmeticException")
+    val excMsg = exception.getMessage
+    assert(excMsg != null, "Exception message should not be null")
+    println("\"" + excMsg + "\"")
   }
 
 }
