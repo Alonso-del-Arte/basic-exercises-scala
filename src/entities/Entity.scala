@@ -1,5 +1,5 @@
 package entities
 
-class Entity {
+class Entity(val name: String) {
 
 }

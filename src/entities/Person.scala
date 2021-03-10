@@ -1,6 +1,8 @@
 package entities
 
-class Person(val firstName: String) extends Entity {
+class Person(val firstName: String, val middleName: String,
+             val lastName: String)
+  extends Entity(firstName + " " + middleName + " " + lastName) {
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[Person]
 
