@@ -4,6 +4,6 @@ import java.util.{Currency, Locale}
 
 object RetailConstants {
 
-  val U_S_DOLLARS = Currency.getInstance(Locale.US)
+  val U_S_DOLLARS: Currency = Currency.getInstance(Locale.US)
 
 }

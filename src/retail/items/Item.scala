@@ -12,7 +12,7 @@ abstract class Item(val sku: String, descriptor: String) {
   var avgStarRating = 0.0
   var salesRank = 0
   var relevanceRanking = 0.0
-  var frontImage: Image = null
+  var frontImage: Image = _
 
   override def toString: String = this.description
 
