@@ -157,3 +157,7 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
+
+# Specific to this project
+src/basicexercises
+test/basicexercises
