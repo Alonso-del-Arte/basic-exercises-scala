@@ -10,9 +10,12 @@ object ComplexNumber {
 }
 
 class ComplexNumber(val re: Double, val im: Double = 0.0) {
-  // TODO: throw exception for infinities or NaN
+  if (!re.isFinite || !im.isFinite) {
+    val excMsg = "Both real and imaginary should be finite (re = " +
+      re.toString + ", im = " + im.toString + ")"
+    throw new ArithmeticException(excMsg)
+  }
 
-  // STUB TO FAIL THE FIRST TEST
   def conjugate: ComplexNumber = new ComplexNumber(this.re, -this.im)
 
   def +(addend: ComplexNumber): ComplexNumber =
