@@ -4,8 +4,15 @@ import scala.collection.mutable.ListBuffer
 
 object IntegerCalculator {
 
+  // STUB TO FAIL THE FIRST TEST
+  def square(n: Int): Int = -1
+
+  // STUB TO FAIL THE FIRST TEST
+  def divisors(n: Int): List[Int] = List()
+
   def longDivReciprocal(n: Int, places: Int = 100): List[Int] = {
-    val pow10 = java.lang.Math.pow(10, java.lang.Math.ceil(java.lang.Math.log10(java.lang.Math.abs(n)))).toInt
+    val pow10 = java.lang.Math.pow(10,
+      java.lang.Math.ceil(java.lang.Math.log10(java.lang.Math.abs(n)))).toInt
     val digits = new ListBuffer[Int]()
     var quotient = pow10
     var remainder = 0
