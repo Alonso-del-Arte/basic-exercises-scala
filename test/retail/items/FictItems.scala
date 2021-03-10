@@ -8,13 +8,16 @@ import retail.items.petsupplies.PetSuppliesItem
 
 object FictItems {
 
-  val LARGE_DOGS_FOOD_BOWL = new PetSuppliesItem("67890", "Food bowl for large dogs")
-  val GENERIC_AA_BATTERIES_4PK = new ElectronicsItem("AA447", "Generic brand batteries 4-pack AA")
+  val LARGE_DOGS_FOOD_BOWL = new PetSuppliesItem("67890",
+    "Food bowl for large dogs")
+  val GENERIC_AA_BATTERIES_4PK = new ElectronicsItem("AA447",
+    "Generic brand batteries 4-pack AA")
   val CAT_FOOD = new PetSuppliesItem("67895", "Cat food 5-lb. bag")
   val DOG_FOOD = new PetSuppliesItem("67889", "Dog food 5-lb. bag")
   val FREE_SAMPLE = new MiscellaneousItem("99999", "Free sample")
   val PET_FOOD_BOWL = new PetSuppliesItem("67878", "Pet food bowl")
-  val NAME_BRAND_BATTERIES_AA_4PK = new ElectronicsItem("AA420", "Name brand batteries 4-pack AA")
+  val NAME_BRAND_BATTERIES_AA_4PK = new ElectronicsItem("AA420",
+    "Name brand batteries 4-pack AA")
 
   def setUpItems(): Unit = {
     LARGE_DOGS_FOOD_BOWL.price = new CurrencyAmount(1899, U_S_DOLLARS)
