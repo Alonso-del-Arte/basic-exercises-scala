@@ -9,11 +9,42 @@ import org.junit.jupiter.api.Assertions._
 
 object CurrencyAmountTest {
 
-  val RANDOM: Random = new Random
-
+  /**
+   * Lybian dinars (LYD). They're subdivided into a thousand darahim, but no
+   * physical coin is provided for one dirham. Although one dirham is
+   * practically worthless compared to one cent of a U. S. dollar, the darahim
+   * should still be kept track of.
+   */
   val DINARS: Currency = Currency.getInstance(Locale.forLanguageTag("ar-LY"))
+
+  /**
+   * The United States dollar (USD), issued by the United States but used over
+   * almost the whole world. Single-character symbol: '$'.
+   */
   val DOLLARS: Currency = Currency.getInstance(Locale.US)
+
+  /**
+   * The Eastern Caribbean dollar (XCD), issued by the Eastern Caribbean Central
+   * Bank (ECCB) and used mostly in eight island nations: Anguilla, Antigua and
+   * Barbuda, Commonwealth of Dominica, Grenada, Montserrat, Saint Kitts and
+   * Nevis, Saint Lucia and Saint Vincent and the Grenadines (Saint Vincent).
+   * This currency is of interest here because its conversion rates are pegged
+   * to the United States dollar: one U. S. dollar exchanges to 2.70 Eastern
+   * Caribbean dollars. This arrangement has already existed for more than half
+   * a century and may well continue for another half century.
+   */
+  val EAST_CARIBBEAN_DOLLARS: Currency = Currency.getInstance("XCD")
+
+  /**
+   * The euro (EUR), issued by the European Union but used over almost the whole
+   * world. Single-character symbol: '&euro;'.
+   */
   val EUROS: Currency = Currency.getInstance("EUR")
+
+  /**
+   * The Japanese yen (JPY), issued in Japan and widely used outside of Japan.
+   * Single-character symbol: '&yen;'.
+   */
   val YEN: Currency = Currency.getInstance(Locale.JAPAN)
 
 }
@@ -103,8 +134,8 @@ class CurrencyAmountTest {
   }
 
   @Test def testPlusRandomAmounts(): Unit = {
-    val centsA = CurrencyAmountTest.RANDOM.nextInt(100000)
-    val centsB = CurrencyAmountTest.RANDOM.nextInt(100000)
+    val centsA = Random.nextInt(100000)
+    val centsB = Random.nextInt(100000)
     val addendA = new CurrencyAmount(centsA, CurrencyAmountTest.EUROS)
     val addendB = new CurrencyAmount(centsB, CurrencyAmountTest.EUROS)
     val expected = new CurrencyAmount(centsA + centsB, CurrencyAmountTest.EUROS)
@@ -117,21 +148,16 @@ class CurrencyAmountTest {
   @Test def testPlusDiffCurrency(): Unit = {
     val addendA = new CurrencyAmount(1225, CurrencyAmountTest.DOLLARS)
     val addendB = new CurrencyAmount(1275, CurrencyAmountTest.YEN)
-    try {
+    print(s"${addendA.toString} plus ${addendB.toString}... ")
+    val exception = assertThrows(classOf[CurrencyConversionNeededException],
+        () => {
       val result = addendA + addendB
-      val msg = "Trying to add " + addendA.toString + " to " + addendB.toString +
-        " should have caused an exception, not given result " + result.toString
-      fail(msg)
-    } catch {
-      case curConvNeedExc: CurrencyConversionNeededException =>
-        println("Trying to add " + addendA.toString + " to " + addendB.toString +
-          " correctly caused CurrencyConversionNeededException")
-        println("\"" + curConvNeedExc.getMessage + "\"")
-      case e: Exception => val msg = e.getClass.getName +
-        " is the wrong exception to throw for trying to add " + addendA.toString +
-        " to " + addendB.toString
-        fail(msg)
-    }
+      println(s"is said to be ${result.toString}")
+    })
+    println("correctly caused CurrencyConversionNeededException")
+    val excMsg = exception.getMessage
+    assert(excMsg != null, "Message is not null")
+    println("\"" + excMsg + "\"")
   }
 
   @Test def testNegate(): Unit = {
@@ -152,8 +178,8 @@ class CurrencyAmountTest {
   }
 
   @Test def testMinusRandomAmounts(): Unit = {
-    val centsA = CurrencyAmountTest.RANDOM.nextInt(125000)
-    val centsB = CurrencyAmountTest.RANDOM.nextInt(150000)
+    val centsA = Random.nextInt(125000)
+    val centsB = Random.nextInt(150000)
     val minuend = new CurrencyAmount(centsA, CurrencyAmountTest.DINARS)
     val subtrahend = new CurrencyAmount(centsB, CurrencyAmountTest.DINARS)
     val expected = new CurrencyAmount(centsA - centsB,
@@ -167,16 +193,16 @@ class CurrencyAmountTest {
   @Test def testMinusDiffCurrency(): Unit = {
     val minuend = new CurrencyAmount(2500, CurrencyAmountTest.DOLLARS)
     val subtrahend = new CurrencyAmount(1275, CurrencyAmountTest.YEN)
-    try {
+    print(s"${minuend.toString} minus ${subtrahend.toString}... ")
+    val exception = assertThrows(classOf[CurrencyConversionNeededException],
+        () => {
       val result = minuend - subtrahend
-      val failMsg = "Trying to subtract " + subtrahend.toString + " from " + minuend.toString + " should have caused an exception, not given result " + result.toString
-      fail(failMsg)
-    } catch {
-      case curConvNeedExc: CurrencyConversionNeededException => println("Trying to subtract " + subtrahend.toString + " from " + minuend.toString + " correctly caused CurrencyConversionNeededException")
-        println("\"" + curConvNeedExc.getMessage + "\"")
-      case e: Exception => val failMsg = e.getClass.getName + " is the wrong exception to throw for trying to subtract " + subtrahend.toString + " from " + minuend.toString
-        fail(failMsg)
-    }
+      println(s"is said to be ${result.toString}")
+    })
+    println("correctly caused CurrencyConversionNeededException")
+    val excMsg = exception.getMessage
+    assert(excMsg != null, "Message should not be null")
+    println("\"" + excMsg + "\"")
   }
 
   @Test def testCompareThruCollectionSort(): Unit = {
