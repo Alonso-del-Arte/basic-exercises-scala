@@ -159,5 +159,6 @@ nbactions.xml
 nb-configuration.xml
 
 # Specific to this project
+src/apikeys
 src/basicexercises
 test/basicexercises
