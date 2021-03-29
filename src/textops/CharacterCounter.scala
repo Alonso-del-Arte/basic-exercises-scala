@@ -13,7 +13,8 @@ class CharacterCounter(val text: String) {
     }
   }
 
-  def query(ch: Char): Int =
+  // THIS WILL FAIL THE caseSensitivity = false TEST
+  def query(ch: Char, caseSensitivity: Boolean = true): Int =
     if (this.charMap.contains(ch)) this.charMap(ch) else 0
 
   def results: HashMap[Char, Int] = this.charMap

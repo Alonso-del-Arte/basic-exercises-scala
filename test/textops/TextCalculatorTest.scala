@@ -28,6 +28,8 @@ class TextCalculatorTest {
     assert(!TextCalculator.anagram(source, target), msg)
   }
 
+  // TODO: Tests for anagram() case-insensitive
+
   @Test def testAnagrammable(): Unit = {
     println("anagrammable")
     val source = "snag a ram"
@@ -37,10 +39,19 @@ class TextCalculatorTest {
   }
 
   @Test def testNotAnagrammable(): Unit = {
-    val source = "Can't make that word from this phrase"
+    val source = "Can't make that word from this source"
     val target = "anagrams"
     val msg = "\"" + target + "\" should NOT be anagrammable from \"" + source + "\""
     assert(!TextCalculator.anagrammable(source, target), msg)
   }
+
+  @Test def testNotAnagrammableBecauseOfExcessiveTargetLength(): Unit = {
+    val source = "Source too short"
+    val target = "This target requires greater length source"
+    val msg = "\"" + target + "\" should NOT be anagrammable from \"" + source + "\""
+    assert(!TextCalculator.anagrammable(source, target), msg)
+  }
+
+  // TODO: Tests for anagrammable() case-insensitive
 
 }

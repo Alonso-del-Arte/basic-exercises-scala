@@ -21,6 +21,16 @@ class CharacterCounterTest {
     for (ch <- 'a' to 'z') assertEquals(0, counter.query(ch))
   }
 
+  @Test def testQueryCaseInsensitive(): Unit = {
+    val text = "The quick brown fox jumps over the lazy dog"
+    val counter = new CharacterCounter(text)
+    for (ch <- 'A' to 'Z') {
+      val msg = "The letter '" + ch + "' appears at least once in \"" + text +
+        "\" when case is ignored"
+      assert(counter.query(ch) > 0, msg)
+    }
+  }
+
   @Test def testResults(): Unit = {
     println("results")
     val text = "ABC"
