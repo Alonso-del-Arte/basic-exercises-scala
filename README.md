@@ -21,3 +21,5 @@ without over-burdening the repository.
 NOTE: I deleted the `chess` package because I intend to move it to its own 
 repository. I don't intend to create a fully working chess game, but I do 
 intend to develop it more than is appropriate for a basic exercises repository.
+
+NOTE: I will be renaming the master branch "main."
