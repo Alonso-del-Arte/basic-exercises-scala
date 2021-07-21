@@ -5,10 +5,10 @@ class CurrencyConversionNeededException(msg: String,
                                         val amountB: CurrencyAmount)
   extends RuntimeException(msg) {
 
-  // STUB TO FAIL THE FIRST TEST
-  def convertAToBCurrency: CurrencyAmount = this.amountA
+  def convertAToBCurrency: CurrencyAmount =
+    CurrencyConverter.convert(this.amountA, this.amountB.currency)
 
-  // STUB TO FAIL THE FIRST TEST
-  def convertBToACurrency: CurrencyAmount = this.amountB
+  def convertBToACurrency: CurrencyAmount =
+    CurrencyConverter.convert(this.amountB, this.amountA.currency)
 
 }
