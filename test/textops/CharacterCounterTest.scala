@@ -27,7 +27,7 @@ class CharacterCounterTest {
     for (ch <- 'A' to 'Z') {
       val msg = "The letter '" + ch + "' appears at least once in \"" + text +
         "\" when case is ignored"
-      assert(counter.query(ch) > 0, msg)
+      assert(counter.query(ch, caseSensitivity = false) > 0, msg)
     }
   }
 
