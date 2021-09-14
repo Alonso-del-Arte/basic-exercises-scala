@@ -23,3 +23,7 @@ repository. I don't intend to create a fully working chess game, but I do
 intend to develop it more than is appropriate for a basic exercises repository.
 
 NOTE: I will be renaming the master branch "main."
+
+NOTE, 14 SEPTEMBER 2021: I reinstated the `chess` package because I decided to 
+use it for an example of sealed classes. But the vast majority of my chess 
+programming will be in my dedicated chess repository. 
